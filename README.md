@@ -15,5 +15,3 @@ The project includes dedicated lab pages that demonstrate common web security we
 ---
 
 # Created for educational use in a local security lab.
-
-<img width="2499" height="1168" alt="Screenshot 2026-02-01 153959" src="https://github.com/user-attachments/assets/8e185531-3624-49dd-8aa8-b730994fc401" />
