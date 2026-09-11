@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>OWASP Top 10 Overview | BuggedCart Lab</title>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/hacker.css') }}">
+    <script src="{{ url_for('static', filename='js/hacker.js') }}" defer></script>
+    <style>
+        .vuln-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .vuln-item {
+            background: rgba(0, 255, 0, 0.05);
+            border: 1px solid #00ff00;
+            border-radius: 8px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        .vuln-item:hover {
+            background: rgba(0, 255, 0, 0.15);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 20px rgba(0, 255, 0, 0.3);
+        }
+        .vuln-item h3 {
+            color: #00ff00;
+            margin-bottom: 10px;
+        }
+        .vuln-item p {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        .vuln-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .vuln-btn {
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.85em;
+            transition: all 0.3s;
+        }
+        .btn-vulnerable {
+            background: #330000;
+            border: 1px solid #ff3333;
+            color: #ff3333;
+        }
+        .btn-vulnerable:hover {
+            background: #440000;
+        }
+        .btn-patched {
+            background: #003300;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+        }
+        .btn-patched:hover {
+            background: #004400;
+        }
+        .disclaimer-box {
+            background: linear-gradient(135deg, #1a0000 0%, #0a0a0a 100%);
+            border: 2px solid #ff3333;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .disclaimer-box h2 {
+            color: #ff3333;
+        }
+        .disclaimer-box p {
+            color: #ffcc00;
+        }
+    </style>
+</head>
+<body class="hacker-body">
+    <canvas id="matrix-canvas"></canvas>
+
+    <header class="hacker-header">
+      <div class="hacker-logo">MR<span class="muted">.BuggedCart</span></div>
+      <nav class="hacker-nav">
+        <a href="/" class="nav-link">HOME</a>
+        <a href="/products" class="nav-link">PRODUCTS</a>
+        <a href="/vulns" class="nav-link">VULN-OVERVIEW</a>
+        <a href="/login" class="nav-btn">ADMIN</a>
+      </nav>
+    </header>
+
+    <main class="container">
+      <section class="hacker-card">
+        <h1 style="text-align:center; color:#00ff00;">OWASP Top 10 Vulnerabilities Lab</h1>
+        
+        <div class="disclaimer-box">
+            <h2>ETHICAL LEARNING ENVIRONMENT</h2>
+            <p>This lab simulates real vulnerabilities for educational purposes only.</p>
+            <p>Each vulnerability can be tested in <strong style="color:#ff3333;">UNPATCHED</strong> (vulnerable) or <strong style="color:#00ff00;">PATCHED</strong> (secure) mode.</p>
+            <p style="margin-top:10px;">Created for educational use in a local security lab.</p>
+        </div>
+
+        <div class="vuln-grid">
+          <div class="vuln-item">
+            <h3>A1 - Injection (SQL)</h3>
+            <p>SQL injection through unsanitized user input in database queries.</p>
+            <div class="vuln-buttons">
+              <a href="/vuln/a1-injection?patched=false" class="vuln-btn btn-vulnerable">Vulnerable</a>
+              <a href="/vuln/a1-injection?patched=true" class="vuln-btn btn-patched">Patched</a>
+            </div>
+          </div>
+
+          <div class="vuln-item">
+            <h3>A2 - Broken Authentication</h3>
+            <p>Authentication bypass through SQL injection in login forms.</p>
+            <div class="vuln-buttons">
+              <a href="/vuln/a2-authentication?patched=false" class="vuln-btn btn-vulnerable">Vulnerable</a>
+              <a href="/vuln/a2-authentication?patched=true" class="vuln-btn btn-patched">Patched</a>
+            </div>
+          </div>
+
+          <div class="vuln-item">
+            <h3>A3 - Sensitive Data Exposure</h3>
+            <p>Exposed credentials, API keys, and configuration data.</p>
+            <div class="vuln-buttons">
+              <a href="/vuln/a3-sensitive-data?patched=false" class="vuln-btn btn-vulnerable">Vulnerable</a>
+              <a href="/vuln/a3-sensitive-data?patched=true" class="vuln-btn btn-patched">Patched</a>
+            </div>
+          </div>
+
+          <div class="vuln-item">
+            <h3>A4 - XML External Entities (XXE)</h3>
+            <p>XXE attacks through malicious XML parsing.</p>
+            <div class="vuln-buttons">
+              <a href="/vuln/a4-xxe?patched=false" class="vuln-btn btn-vulnerable">Vulnerable</a>
+              <a href="/vuln/a4-xxe?patched=true" class="vuln-btn btn-patched">Patched</a>
+            </div>
+          </div>
+
+          <div class="vuln-item">
+            <h3>A5 - Broken Access Control</h3>
+            <p>Missing authorization checks on sensitive admin functions.</p>
+            <div class="vuln-buttons">
+              <a href="/vuln/a5-access-control?patched=false" class="vuln-btn btn-vulnerable">Vulnerable</a>
+              <a href="/vuln/a5-access-control?patched=true" class="vuln-btn btn-patched">Patched</a>
+            </div>
+          </div>
+
+          <div class="vuln-item">
+            <h3>A6 - Security Misconfiguration</h3>
+            <p>Debug mode enabled, verbose errors, exposed server info.</p>
+            <div class="vuln-buttons">
+              <a href="/vuln/a6-misconfig?patched=false" class="vuln-btn btn-vulnerable">Vulnerable</a>
+              <a href="/vuln/a6-misconfig?patched=true" class="vuln-btn btn-patched">Patched</a>
+            </div>
+          </div>
+
+          <div class="vuln-item">
+            <h3>A7 - Cross-Site Scripting (XSS)</h3>
+            <p>Reflected and stored XSS through unsanitized output.</p>
+            <div class="vuln-buttons">
+              <a href="/vuln/a7-xss?patched=false" class="vuln-btn btn-vulnerable">Vulnerable</a>
+              <a href="/vuln/a7-xss?patched=true" class="vuln-btn btn-patched">Patched</a>
+            </div>
+          </div>
+
+          <div class="vuln-item">
+            <h3>A8 - Insecure Deserialization</h3>
+            <p>Remote code execution through unsafe pickle deserialization.</p>
+            <div class="vuln-buttons">
+              <a href="/vuln/a8-deserialization?patched=false" class="vuln-btn btn-vulnerable">Vulnerable</a>
+              <a href="/vuln/a8-deserialization?patched=true" class="vuln-btn btn-patched">Patched</a>
+            </div>
+          </div>
+
+          <div class="vuln-item">
+            <h3>A9 - Vulnerable Components</h3>
+            <p>Using libraries and packages with known CVEs.</p>
+            <div class="vuln-buttons">
+              <a href="/vuln/a9-components?patched=false" class="vuln-btn btn-vulnerable">Vulnerable</a>
+              <a href="/vuln/a9-components?patched=true" class="vuln-btn btn-patched">Patched</a>
+            </div>
+          </div>
+
+          <div class="vuln-item">
+            <h3>A10 - Logging & Monitoring Failures</h3>
+            <p>Logging sensitive data without redaction.</p>
+            <div class="vuln-buttons">
+              <a href="/vuln/a10-logging?patched=false" class="vuln-btn btn-vulnerable">Vulnerable</a>
+              <a href="/vuln/a10-logging?patched=true" class="vuln-btn btn-patched">Patched</a>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </main>
+
+    <footer class="hacker-footer">
+      <div>BuggedCart Security Lab - OWASP Top 10 Training Platform</div>
+      <div class="muted">For ethical learning and simulation purposes only.</div>
+    </footer>
+</body>
+</html>
